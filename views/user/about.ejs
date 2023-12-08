@@ -1,0 +1,32 @@
+<%- include('../partials/header.ejs'); -%>
+
+<nav class=" navbar navbar-expand-lg navbar-dark"
+        style="position: fixed; width: 100%; background-color: #212121; top:0px; z-index: 1">
+        <div class="container">
+            <a href="/user/dashboard?id=<%= user.id %>" class="navbar-brand text-primary font-weight-bold p-3">SKEDDULE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto text-center">
+                    <li class="nav-item"><a href="/user/dashboard?id=<%= user.id %>" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/user/about?id=<%= user.id %>" class="nav-link">About</a></li>
+                    <li style="color: #fff;" class="nav-item nav-link"><i class="fas fa-user mr-1"></i>
+                        <%= user.username %>
+                    </li>
+                    <li class="nav-item"><a href="/user/logout?id=<%= user.id %>" class="nav-link">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+<div class="container mt-5 pt-5">
+    <p class="w-50 m-auto">
+        Skeddule, your personal task companion, brings simplicity to task management! Seamlessly register and login to your personalized dashboard, where you wield the power to effortlessly add, edit, delete, and view tasks. With intuitive features like priority management, status updates from 'todo' to 'in progress' and 'completed,' and a robust search functionality, Skeddule empowers you to organize your tasks with ease. Elevate your productivity and make every task count with Skeddule – where task management meets simplicity!
+    </p>
+</div>
+
+
+<%- include('../partials/footer.ejs'); -%>

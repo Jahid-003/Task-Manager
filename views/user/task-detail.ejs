@@ -1,0 +1,54 @@
+<%- include('../partials/header.ejs'); -%>
+
+    <nav class=" navbar navbar-expand-lg navbar-dark"
+        style="position: fixed; width: 100%; background-color: #212121; top:0px; z-index: 1">
+        <div class="container">
+            <a href="/user/dashboard?id=<%= user.id %>" class="navbar-brand text-primary font-weight-bold p-3">SKEDDULE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto text-center">
+                    <li class="nav-item"><a href="/user/dashboard?id=<%= user.id %>" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/user/about?id=<%= user.id %>" class="nav-link">About</a></li>
+                    <li style="color: #fff;" class="nav-item nav-link"><i class="fas fa-user mr-1"></i>
+                        <%= user.username %>
+                    </li>
+                    <li class="nav-item"><a href="/user/logout?id=<%= user.id %>" class="nav-link">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-5 h-100" >
+        <div class="d-flex">
+            <h5>Task Title : </h5>
+            <p class="ml-5 pl-5"><%= task.task_name %></p>
+        </div>
+        <div class="d-flex">
+            <h5>Task Description : </h5>
+            <p class="ml-4 pl-2"><%= task.description %></p>
+        </div>
+        <div class="d-flex">
+            <h5>Due Date : </h5>
+            <p class="ml-5 pl-5">
+                <%= task.due_date.toLocaleDateString('en-US', { weekday: 'short' , year: 'numeric' ,
+                                    month: 'short' , day: 'numeric' }) %>
+            </p>
+        </div>
+        <div class="d-flex">
+            <h5>Task Priority : </h5>
+            <p class="ml-4 pl-5"><%= task.priority %></p>
+        </div>
+
+        <div class="d-flex">
+            <h5>Task Status : </h5>
+            <p class="pl-4" style="margin-left: 55px !important; ">
+                <%= task.status %>
+            </p>
+        </div>
+
+    </div>
+
+<%- include('../partials/footer.ejs'); -%>

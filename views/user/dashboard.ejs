@@ -3,13 +3,15 @@
     <nav class=" navbar navbar-expand-lg navbar-dark"
         style="position: fixed; width: 100%; background-color: #212121; top:0px; z-index: 1">
         <div class="container">
-            <a href="/user/dashboard" class="navbar-brand text-primary font-weight-bold p-3">SKEDDULE</a>
+            <a href="/user/dashboard?id=<%= user.id %>" class="navbar-brand text-primary font-weight-bold p-3">SKEDDULE</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto text-center">
+                    <li class="nav-item"><a href="/user/dashboard?id=<%= user.id %>" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/user/about?id=<%= user.id %>" class="nav-link">About</a></li>
                     <li style="color: #fff;" class="nav-item nav-link"><i class="fas fa-user mr-1"></i>
                         <%= user.username %>
                     </li>
@@ -24,12 +26,12 @@
             <div class="container">
                 <h2 class="text-center pb-4" style="text-decoration: underline;">Welcome to SKEDDULE</h2>
                 <div style="display: flex; width: 100%; justify-content: space-between;">
-                    <form style="width: 100%;" method="post" action="/user/task/add?id=<%= user.id %>">
+                    <form style="width: 100%;" method="post" action="<%= typeof task !== 'undefined' ? '/user/task/update?id='+ task.id + '&user_id=' + user.id : '/user/task/add?id='+ user.id %>">
                         <div class="row pb-2">
                             <div class="col-lg-6 d-flex">
                                 <label class="col-sm-3 col-form-label">Title</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="task" required class="form-control"
+                                    <input type="text" name="task" value="<%= typeof task !=='undefined' ? task.task_name : '' %>" required class="form-control"
                                         placeholder="Enter task title">
                                 </div>
                             </div>
@@ -37,7 +39,7 @@
                                 <label class="col-sm-3 col-form-label">Description</label>
                                 <div class="col-sm-9">
                                     <textarea class="form-control" name="task_description" required
-                                        placeholder="Enter task description" rows="2"></textarea>
+                                        placeholder="Enter task description" rows="2"><%= typeof task !=='undefined' ? task.description : '' %></textarea>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +47,9 @@
                             <div class="col-lg-6 d-flex">
                                 <label class="col-sm-3 col-form-label">Due Date</label>
                                 <div class="col-sm-9">
-                                    <input type="date" name="due_date" required class="form-control">
+                                    <!-- <input type="date" value="<%= typeof task !== 'undefined' ? task.due_date : '' %>" name="due_date" required class="form-control"> -->
+                                    <% var formattedDueDate = typeof task !== 'undefined' && task.due_date ? new Date(task.due_date).toISOString().split('T')[0] : ''; %>
+                                    <input type="date" name="due_date" required class="form-control" value="<%= formattedDueDate %>">
                                 </div>
                             </div>
                             <div class="col-lg-6 d-flex">
@@ -53,38 +57,52 @@
                                 <div class="col-sm-9">
                                     <select class="form-control" required name="priority" id="">
                                         <option value="">Select Priority</option>
-                                        <option value="1">High</option>
-                                        <option value="2">Medium</option>
-                                        <option value="3">Low</option>
+                                        <option value="1" <%= typeof task !== 'undefined' && task.priority === 1 ? 'selected' : '' %>>High</option>
+                                        <option value="2" <%= typeof task !== 'undefined' && task.priority === 2 ? 'selected' : '' %>>Medium</option>
+                                        <option value="3" <%= typeof task !== 'undefined' && task.priority === 3 ? 'selected' : '' %>>Low</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 text-right">
-                                <input class="btn btn-primary m-3" type="Submit" value="Add Task">
-                            </div>
+                               <div class="col-md-9 ">
+                                    <% if (typeof msg !== 'undefined' && msg == 1) { %>
+                                        <div style="width: 50%; margin-top: 10px;" class="alert alert-success alert-dismissible fade show mx-auto" role="alert">
+                                          <span>Task added successfully.</span>
+                                        </div>
+                                      <% } %>
+                                        <% if(typeof msg !=='undefined' && msg==2) { %>
+                                            <div style="width: 50%; margin-top: 10px;"
+                                                class=" alert alert-success alert-dismissible fade show mx-auto" role="alert">
+                                                <span>Task deleted successfully.</span>
+                                            </div>
+                                            <% } %>
+                                            <% if(typeof msg !=='undefined' && msg==3) { %>
+                                                <div style="width: 50%; margin-top: 10px;"
+                                                    class=" alert alert-success alert-dismissible fade show mx-auto" role="alert">
+                                                    <span>Task updated successfully.</span>
+                                                </div>
+                                                <% } %>
+
+                                                <% if (typeof msg !== 'undefined') { %>
+                                                    <script>
+                                                        // Automatically close the alert after 5000 milliseconds (5 seconds)
+                                                        setTimeout(function () {
+                                                          document.querySelector('.alert').remove();
+                                                        }, 2000);
+                                                      </script>
+                                                <% } %>
+                               </div>
+                                <div class="col-md-3 text-right">
+                                    <% if(typeof task !=='undefined') { %>
+                                        <input class="btn btn-primary m-3" type="Submit" value="Update Task">
+                                    <% } else { %>
+                                        <input class="btn btn-primary m-3" type="Submit" value="Add Task">
+                                    <% } %>
+                                </div>
                         </div>
                     </form>
                 </div>
-                <% if(typeof msg !=='undefined' && msg==1) { %>
-                    <div style="width: 50%; margin-top: 10px;" class=" alert alert-success alert-dismissible fade show"
-                        role="alert">
-                        <span>Task added successfully.</span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <% } %>
-                        <% if(typeof msg !=='undefined' && msg==2) { %>
-                            <div style="width: 50%; margin-top: 10px;"
-                                class=" alert alert-success alert-dismissible fade show" role="alert">
-                                <span>Task deleted successfully.</span>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <% } %>
             </div>
         </header>
 
@@ -101,42 +119,52 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% tasks.forEach(function(task){ %>
+                    <% tasks.forEach(function(task, index){ %>
                         <tr>
-                            <th scope="row">1</th>
+                            <th scope="row"><%= index+1 %></th>
                             <td class="font-weight-bold">
                                 <%= task.task_name %>
                             </td>
                             <td>
-                                <%= task.due_date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %>
+                                <%= task.due_date.toLocaleDateString('en-US', { weekday: 'short' , year: 'numeric' ,
+                                    month: 'short' , day: 'numeric' }) %>
                             </td>
-                            
+
                             <td>
                                 <select
-                                class="form-control <%= task.status === 'Todo' ? 'btn-primary' : (task.status === 'In Progress' ? 'btn-warning' : 'btn-success') %>"
-                                id="task_status" value="<%= task.status %>"
-                                onchange="handleStatusChange(this, <%= task.id %>, <%= task.user_id %>)"
-                                <%=task.status==='Completed' ? 'disabled' : '' %>>>
-                                <option <%=task.status==='Todo' ? 'selected' : '' %> >Todo</option>
-                                <option <%=task.status==='In Progress' ? 'selected' : '' %> >In Progress
-                                </option>
-                                <option <%=task.status==='Completed' ? 'selected' : '' %> >Completed</option>
-                            </select>
+                                    class="form-control <%= task.status === 'Todo' ? 'btn-primary' : (task.status === 'In Progress' ? 'btn-warning' : 'btn-success') %>"
+                                    id="task_status" value="<%= task.status %>"
+                                    onchange="handleStatusChange(this, <%= task.id %>, <%= task.user_id %>)"
+                                    <%=task.status==='Completed' ? 'disabled' : '' %>>>
+                                    <option <%=task.status==='Todo' ? 'selected' : '' %> >Todo</option>
+                                    <option <%=task.status==='In Progress' ? 'selected' : '' %> >In Progress
+                                    </option>
+                                    <option <%=task.status==='Completed' ? 'selected' : '' %> >Completed</option>
+                                </select>
                             </td>
-                            <td class="pl-4"><%= task.priority %></td>
+                            <td class="pl-4">
+                                <%= task.priority === 1 ? 'High' : (task.priority === 2 ? 'Medium' : 'Low') %>
+                            </td>
                             <td class="d-flex">
-                                <a href="" title="Edit"><button type="button" class="btn btn-sm"
-                                        style="background-color: #5a5c69; color:#fff;"><i class="fas fa-edit"></i></button></a>
-                                <form class="ml-1" action="/user/task/delete?id=<%= task.id %>&user_id=<%= user.id %>" method="POST">
-                                    <button type="submit" class="btn btn-sm" title="Delete" style="background-color: #e74a3b; color:#fff;"
-                                        onclick="return confirm('Are you sure to delete this record?')"><i class="fa fa-trash"></i></button>
+                                <a href="/user/task/get/<%= task.id %>?user_id=<%= user.id %>" title="View"><button type="button" class="btn btn-sm btn-primary"
+                                    style="color:#fff;"><i
+                                        class="fas fa-eye"></i></button></a>
+                                <a href="/user/task/edit?id=<%= task.id %>&user_id=<%= user.id %>" title="Edit"><button type="button" class="btn btn-sm ml-1"
+                                        style="background-color: #5a5c69; color:#fff;"><i
+                                            class="fas fa-edit"></i></button></a>
+                                <form class="ml-1" action="/user/task/delete?id=<%= task.id %>&user_id=<%= user.id %>"
+                                    method="POST">
+                                    <button type="submit" class="btn btn-sm" title="Delete"
+                                        style="background-color: #e74a3b; color:#fff;"
+                                        onclick="return confirm('Are you sure to delete this record?')"><i
+                                            class="fa fa-trash"></i></button>
                                 </form>
                             </td>
-                            </tr>
-                            <% }) %>
-            </tbody>
+                        </tr>
+                        <% }) %>
+                </tbody>
             </table>
-    </div>
+        </div>
     </div>
 
     <script>

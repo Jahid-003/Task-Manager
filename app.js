@@ -25,13 +25,6 @@ app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// const header = ejs.compile(fs.readFileSync(__dirname + '/views/partials/header.ejs').toString('utf-8'));
-// const navbar = ejs.compile(fs.readFileSync(__dirname + '/views/partials/navbar.ejs').toString('utf-8'));
-// const footer = ejs.compile(fs.readFileSync(__dirname + '/views/partials/footer.ejs').toString('utf-8'));
-// ejs.registerPartial('header', header);
-// ejs.registerPartial('navbar', navbar);
-// ejs.registerPartial('footer', footer);
-
 app.get('/hello', (req, res) => { res.send('Hello World')});
 app.use("/", require("./routes/index-route"))
 app.use("/user", require("./routes/user_route"));
@@ -39,7 +32,7 @@ app.use("/user/task", require("./routes/task_route"));
 
 // db.sequelize.sync().catch(err => {
 //   throw err
-// }); this need to be run once to create tables
+// });
 
   app.listen(port, function () {
     console.log("Server is running on http://localhost:" + port);

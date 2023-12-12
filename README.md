@@ -1,6 +1,5 @@
 # Task-Manager README.md
 # Skeddule - Your Personal Task Companion
-
 Skeddule is a powerful task management tool designed for simplicity, helping you organize your tasks effortlessly. From task creation to priority management, status updates, and robust search functionality, Skeddule streamlines your workflow, making every task count.
 
 ## Getting Started

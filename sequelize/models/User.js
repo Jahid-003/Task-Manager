@@ -41,14 +41,14 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  //  user.beforeCreate(async (user) => {
-  //   user.password = await user.generatePasswordHash();
-  // });
-  // user.prototype.generatePasswordHash = function () {
-  //   if (this.password) {
-  //     return bcrypt.hash(this.password, 10);
-  //   }
-  // };
+   user.beforeCreate(async (user) => {
+    user.password = await user.generatePasswordHash();
+  });
+  user.prototype.generatePasswordHash = function () {
+    if (this.password) {
+      return bcrypt.hash(this.password, 10);
+    }
+  };
   
   return user;
 };

@@ -1,32 +1,29 @@
 <%- include('partials/header.ejs'); -%>
 <%- include('partials/navbar.ejs'); -%>
 
-<div class="container" style="margin-top: 40px;">
-    <header class="jumbotron" style="height: 250px;">
+<div class="container mt-5">
+    <header class="jumbotron text-center bg-light p-5">
         <div class="container">
-            <h1 style="margin-left: 0px;">Welcome to SKEDDULE</h1>
-            <p>Your personal task companion.</p>
-            <div style="display: flex; width: 100%; justify-content: space-between;">
-                <p style="width: 200px;">
-                    <a class="btn btn-primary btn-large" href="/user/login">Get Started</a>
-                </p>
+            <h1 class="display-4">Welcome to <span class="text-primary">SKEDDULE</span></h1>
+            <p class="lead">Your personal task companion.</p>
 
-                <!-- <form class=" d-flex " style="margin-right: 20px;">
+            <div class="d-flex justify-content-center mt-4">
+                <a class="btn btn-primary btn-lg mr-3" href="/user/login">Sign In</a>
+
+                <!-- Uncomment the search form if needed -->
+                <!--
+                <form class="form-inline">
                     <div class="form-group">
-                        <div class="row">
-                            <div class="form-outline">
-                                <input type="search" name="search" required disabled placeholder="Search task" class="form-control" />
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                        <input type="search" name="search" required placeholder="Search task" class="form-control" />
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
-                </form> -->
+                </form>
+                -->
             </div>
         </div>
     </header>
 </div>
-
 
 <%- include('partials/footer.ejs'); -%>

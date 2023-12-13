@@ -56,19 +56,25 @@ module.exports.getUserLogin = async (req, res) => {
     const user = await db.user.findOne({
       where: { email, status: STATUS_ACTIVE },
     });
+
     if (user) {
-      const valid = bcrypt.compare(password, user.password); 
+      const valid = await bcrypt.compare(password, user.password); // await here
       if (valid) {
         const token = jwt.sign({ id: user.id }, 'skeddule');
         if (token) {
-          await db.token.destroy({ where : { user_id: user.id }});
+          await db.token.destroy({ where: { user_id: user.id } });
           await db.token.create({ token, user_id: user.id });
           res.status(200).redirect(`/user/dashboard?id=${user.id}`);
         }
-      } else res.status(403).render("user/login", { msg: "Invalid Credentials." });
-    } else res.status(403).render("user/login", { msg: "Invalid Credentials." });
+      } else {
+        res.status(403).render("user/login", { msg: "Invalid Credentials." });
+      }
+    } else {
+      res.status(403).render("user/login", { msg: "Invalid Credentials." });
+    }
   }
 };
+
 
 module.exports.userLogout = async (req, res) => {
   await db.token.update(

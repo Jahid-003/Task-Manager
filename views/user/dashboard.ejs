@@ -186,6 +186,41 @@
                 console.error('Error making API call:', error);
             });
     }
+    if ("Notification" in window) {
+            Notification.requestPermission().then(async function (permission) {
+                if (permission === "granted") {
+                    console.log("Notification permission granted");
+
+                    // Fetch tasks from the server
+                    const response = await fetch('http://localhost:3000/tasks');
+                    const tasks = await response.json();
+
+                    // Schedule notifications for upcoming deadlines
+                    tasks.forEach(task => {
+                        const deadlineTime = new Date(task.deadline);
+                        const currentTime = new Date();
+
+                        if (currentTime < deadlineTime) {
+                            const timeUntilNotification = deadlineTime - currentTime;
+
+                            setTimeout(function () {
+                                showNotification("Upcoming Deadline", task.description);
+                            }, timeUntilNotification);
+                        }
+                    });
+                }
+            });
+        }
+
+        function showNotification(title, options) {
+            if (Notification.permission === "granted") {
+                var notification = new Notification(title, { body: options });
+
+                setTimeout(function () {
+                    notification.close();
+                }, 5000);
+            }
+        }
 </script>
 
 <%- include('../partials/footer.ejs'); -%>

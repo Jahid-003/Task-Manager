@@ -1,5 +1,5 @@
 -- Create a new Database for The Completionist webpage
-DROP DATABASE IF EXISTS completionist;
+DROP DATABASE IF EXISTS skeddule;
 CREATE DATABASE skeddule;
 USE skeddule;
 

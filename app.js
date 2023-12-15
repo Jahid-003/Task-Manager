@@ -6,7 +6,7 @@ const cors = require("cors");
 const db = require("./sequelize/models");
 const fs = require('fs');
 
-const port = process.env.PORT || 300;
+const port = process.env.PORT || 3001;
 const app = express();
 
 var corsOption = {

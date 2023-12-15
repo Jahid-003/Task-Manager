@@ -1,4 +1,4 @@
--- Create a new Database for The Completionist webpage
+-- Create a new Database for The Skeddule webpage
 DROP DATABASE IF EXISTS skeddule;
 CREATE DATABASE skeddule;
 USE skeddule;

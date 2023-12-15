@@ -15,7 +15,7 @@ module.exports.addUser = async (req, res) => {
 
   if (email_exist)
     res.status(403).render("user/register", { msg: "Email already exist." });
-  else if(password.lenght < 5) res.status(403).render("user/register", { msg: "Password must be six characters long." });
+  else if(password.length < 5) res.status(403).render("user/register", { msg: "Password must be six characters long." });
   else if (password != confirmpassword)
     res.status(403).render("user/register", { msg: "Password not matched." });
   else {

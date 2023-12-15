@@ -33,8 +33,11 @@ Uncomment the db.sync code at the end of the app.js file. This step ensures that
 ### Usage
 Register or log in to your personalized dashboard.
 Log in detail:
+
 Email:jhuss004@campus.goldsmiths.ac.uk
+
 Password:test
+
 Add, edit, delete, and view tasks seamlessly.
 Manage task priorities and update status from 'todo' to 'in progress' and 'completed.'
 Utilize the robust search functionality to quickly find tasks.

@@ -42,5 +42,5 @@ CREATE TABLE users (
 
 -- Create a new admin user for accessing database
 DROP USER IF EXISTS 'jhuss004'@'localhost';
-CREATE USER 'jhuss004'@'localhost' IDENTIFIED WITH mysql_native_password BY 'github';
-GRANT ALL PRIVILEGES ON skeddule.* TO 'jhuss004'@'localhost';
+CREATE USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Jahid123!';
+GRANT ALL PRIVILEGES ON skeddule.* TO 'root'@'localhost';

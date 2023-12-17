@@ -34,8 +34,6 @@ app.use("/user/task", require("./routes/task_route"));
 //   throw err
 // });
 
-  app.listen(port, function () {
-    console.log("Server is running on http://localhost:" + port);
-  });
-
-
+app.listen(port, function () {
+  console.log("Server is running on http://localhost:" + port);
+});
